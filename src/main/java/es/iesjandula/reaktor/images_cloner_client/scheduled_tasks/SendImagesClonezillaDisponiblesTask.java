@@ -1,45 +1,30 @@
 package es.iesjandula.reaktor.images_cloner_client.scheduled_tasks;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.ExitCodeGenerator;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.iesjandula.reaktor.base.utils.BaseException;
 import es.iesjandula.reaktor.base.utils.HttpClientUtils;
 import es.iesjandula.reaktor.base_client.security.service.AuthorizationService;
 import es.iesjandula.reaktor.base_client.utils.BaseClientException;
-import es.iesjandula.reaktor.images_cloner_client.config.ImagesClonerProperties;
 import es.iesjandula.reaktor.images_cloner_client.dto.ConfiguracionClonadorDto;
-import es.iesjandula.reaktor.images_cloner_client.dto.ImagenClonezilla;
 import es.iesjandula.reaktor.images_cloner_client.service.ImageDirectoryScanner;
-import es.iesjandula.reaktor.images_cloner_client.service.RestoreAutoScriptRunner;
 import es.iesjandula.reaktor.images_cloner_client.utils.Constants;
 import es.iesjandula.reaktor.images_cloner_client.utils.ImagesClonerClientException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**

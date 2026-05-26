@@ -20,4 +20,7 @@ public class ConfiguracionClonadorDto
 
     /** Nombre de la imagen que se debe activar */
     private String nombreImagen ;
+
+    /** Acción post-restore: poweroff, reboot o true */
+    private String accion ;
 }

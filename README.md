@@ -1,41 +1,26 @@
 # ImagesClonerClient
 
-Cliente Java para servidores **Clonezilla HTTP** (`clonezilla_server_scripts/prod-ubuntu`). En cada ejecución (cron o systemd timer):
+Cliente Java para servidores **Clonezilla HTTP** (`clonezilla_server_scripts/prod-ubuntu`). En cada ejecución (systemd timer):
 
 1. Lista carpetas en `{clonezilla-root}/{images-dir}/`.
 2. `POST /images_cloner/client/` con la lista de nombres locales (JSON array).
-3. En la respuesta, procesa imágenes con estado `PENDIENTE` y `accion` informada.
-4. Ejecuta `scripts/set-restore-auto.sh <imagen> <accion>` en el host.
-5. `PUT /images_cloner/client/` con cabecera `nombreImagen` para marcar la imagen como ACTIVADA en el servidor.
+3. Si la respuesta indica `activarImagen` (imagen `PENDIENTE` en servidor), actualiza `RESTORE_AUTO_*` en `.env`, ejecuta `docker compose up -d --force-recreate` y confirma con `PUT`.
+4. Si `menuActivo` es false, vacía `RESTORE_AUTO_*` y recrea el stack (modo menú whiptail).
 
-La orquestación del tick vive en `scheduled_tasks.PollTickRunner` (mismo patrón que `printers_client.scheduled_tasks`: HTTP Apache, JWT Bearer vía `AuthorizationService`, logging `POLL_TICK - …`).
+La orquestación del tick vive en `scheduled_tasks.SendImagesClonezillaDisponiblesTask` (`CommandLineRunner`: un proceso, un tick, salida vía `SpringApplication.exit`). La lógica de `.env` + Docker está en `scheduled_tasks.RestoreAutoConfigurer` (sustituye `scripts/set-restore-auto.sh`).
 
 Depende de [Reaktor_BaseClient](https://github.com/IESJandula/Reaktor_BaseServer/) (mismo parent `Dependencies` que [PrintersClient](https://github.com/IESJandula/Reaktor_PrintersClient)).
 
-## Migración desde InternalComponents
-
-| Antes | Ahora |
-|-------|-------|
-| `Reaktor_InternalComponentsClient` | `Reaktor_ImagesClonerClient` |
-| Prefijo config `internal-components` | `images-cloner` |
-| Rol JWT `CLIENTE_INTERNAL_COMPONENTS` | `CLIENTE_IMAGES_CLONER` |
-| Rutas `/opt/.../internal-components-client/` | `/opt/.../images-cloner-client/` |
-| Timer `clonezilla-internal-components.timer` | `clonezilla-images-cloner.timer` |
-
 ## Contrato REST (ImagesClonerServer)
 
-Base URL configurable: `images-cloner.server-url` (puerto **8094** en dev).
+Base URL: `images-cloner.server-url` (puerto **8094** en dev).
 
 | Método | Ruta | Entrada | Respuesta |
 |--------|------|---------|-----------|
-| POST | `/images_cloner/client/` | `Content-Type: application/json` — cuerpo `List<String>` | `200` + `List<ImagenClonezilla>` (`nombreImagen`, `estado`, `accion`) |
+| POST | `/images_cloner/client/` | `Content-Type: application/json` — cuerpo `List<String>` | `200` + `ConfiguracionClonadorDto` (`menuActivo`, `activarImagen`, `nombreImagen`, `accion`) |
 | PUT | `/images_cloner/client/` | Cabecera `nombreImagen` | `200` sin cuerpo |
 
-Todas las peticiones llevan `Authorization: Bearer <token>` vía `AuthorizationService` de BaseClient. Rol JWT: **`CLIENTE_IMAGES_CLONER`**.
-
-## Arranque del tick
-
-Spring Boot sin servidor web (`web-application-type: none`). `PollTickRunner` implementa `CommandLineRunner`: un proceso, un tick, código de salida vía `SpringApplication.exit` (igual que el despliegue con timer en prod-ubuntu; distinto de PrintersClient, que usa `@Scheduled` en proceso largo).
+Todas las peticiones llevan `Authorization: Bearer <token>` vía `AuthorizationService`. Rol JWT: **`CLIENTE_IMAGES_CLONER`**.
 
 ## Configuración (`application.yaml`)
 
@@ -51,19 +36,19 @@ images-cloner:
 reaktor:
   publicKeyFile: /opt/clonezilla-http/images-cloner-client/public_key.pem
   clientId: CLIENTE_IMAGES_CLONER
+  http_connection_timeout: 30000
 ```
 
-`poll-interval-seconds` lo usa el instalador de `prod-ubuntu` para el **systemd timer**, no el JAR (cada invocación hace un solo tick y termina).
+`poll-interval-seconds` lo usa el instalador de `prod-ubuntu` para el **systemd timer**, no el JAR.
 
-## Build
+## Build y pruebas
 
 ```bash
 mvn clean package
+mvn test
 ```
 
 Artefacto: `target/ImagesClonerClient-*.jar` (renombrar a `images-cloner-client.jar` en el servidor).
-
-Repositorio: `C:\Users\Arduino\git\Reaktor_ImagesClonerClient`
 
 ## Despliegue en Ubuntu
 
@@ -74,8 +59,10 @@ Tras `sudo bash install.sh` en prod-ubuntu:
 - Timer: `clonezilla-images-cloner.timer`
 - Log: `/var/log/clonezilla-http/images-cloner-client.log`
 
-Prueba manual:
+Prueba manual de un tick:
 
 ```bash
 sudo /opt/clonezilla-http/scripts/run-images-cloner-client.sh
 ```
+
+Repositorio: `C:\Users\Arduino\git\Reaktor_ImagesClonerClient`

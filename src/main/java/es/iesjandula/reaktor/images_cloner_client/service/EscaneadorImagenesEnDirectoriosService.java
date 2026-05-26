@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ImageDirectoryScanner
+public class EscaneadorImagenesEnDirectoriosService
 {
 	/** Propiedades de la aplicación - Clonezilla Root */
 	@Value("${images-cloner.clonezilla-root}")

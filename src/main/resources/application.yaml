@@ -1,0 +1,25 @@
+spring:
+  main:
+    web-application-type: none
+    banner-mode: off
+
+logging:
+  level:
+    es.iesjandula: INFO
+  file:
+    name: /var/log/clonezilla-http/images-cloner-client.log
+    max-size: 2MB
+    max-history: 5
+    total-size-cap: 20MB
+
+images-cloner:
+  server-url: http://localhost:8094
+  poll-interval-seconds: 120
+  clonezilla-root: /opt/clonezilla-http
+  images-dir: images
+  http-connection-timeout-ms: 30000
+  client-id: CLONEZILLA_HOST
+
+reaktor:
+  publicKeyFile: /opt/clonezilla-http/images-cloner-client/public_key.pem
+  clientId: CLIENTE_IMAGES_CLONER

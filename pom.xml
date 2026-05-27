@@ -27,6 +27,34 @@
 		</dependency>
 	</dependencies>
 
+    <build>
+        <!-- Util para la asignación de secretos desde Github -->
+        <resources>
+
+            <!-- 1) Recursos FILTRADOS (texto), excluyendo TODO puertas -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.p12</exclude>
+                    <exclude>**/*.pem</exclude>
+                    <exclude>**/*.csv</exclude>
+                    <exclude>**/*.jar</exclude>
+                </excludes>
+            </resource>
+
+            <!-- 2) Recursos NO FILTRADOS (binarios) -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.p12</include>
+                    <include>**/*.pem</include>
+                    <include>**/*.csv</include>
+                </includes>
+            </resource>
+
+        </resources>
         <plugins>
             <!-- Util para la asignación de secretos desde Github -->
             <plugin>

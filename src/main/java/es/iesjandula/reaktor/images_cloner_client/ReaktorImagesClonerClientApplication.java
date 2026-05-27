@@ -7,6 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 import es.iesjandula.reaktor.images_cloner_client.config.ImagesClonerProperties;
 
+/**
+ * @author Francisco Manuel Benítez Chico
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = { "es.iesjandula" })
 @EnableConfigurationProperties(ImagesClonerProperties.class)

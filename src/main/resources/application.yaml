@@ -23,6 +23,11 @@ images-cloner:
 reaktor:
   publicKeyFile: /opt/clonezilla-http/images-cloner-client/public_key.pem
   clientId: CLIENTE_IMAGES_CLONER
+  printers_server_url: http://localhost:8082/
+  firebase_server_url: http://localhost:8083/
+  notifications_server_url: http://localhost:8088/
+  school_base_server_url: http://localhost:8093/
+  images_cloner_server_url: http://localhost:8094/
   http_connection_timeout: 30000
   clonezilla:
     root: /opt/clonezilla-http

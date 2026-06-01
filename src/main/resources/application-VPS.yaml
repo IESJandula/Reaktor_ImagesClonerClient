@@ -27,10 +27,11 @@ logging:
 reaktor:
   publicKeyFile: ${PUBLIC_KEY_FILE}
   urlCors: https://somos.iesjandula.es
-  images_cloner_server_url: https://api.iesjandula.es/
+  printers_server_url: https://api.iesjandula.es/
   firebase_server_url: https://api.iesjandula.es/
   notifications_server_url: https://api.iesjandula.es/
   school_base_server_url: https://api.iesjandula.es/
+  images_cloner_server_url: https://api.iesjandula.es/
   clientId: ${CLIENT_ID}
   http_connection_timeout: 30000
   clonezilla:

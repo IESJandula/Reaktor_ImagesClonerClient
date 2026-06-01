@@ -33,7 +33,9 @@ reaktor:
   school_base_server_url: https://api.iesjandula.es/
   clientId: ${CLIENT_ID}
   http_connection_timeout: 30000
-  constantes:
+  clonezilla:
+    root: /opt/clonezilla-http
+    images-dir: images
   audit:
     exchange: audit.exchange
     routing-key: audit.key

@@ -24,3 +24,6 @@ reaktor:
   publicKeyFile: /opt/clonezilla-http/images-cloner-client/public_key.pem
   clientId: CLIENTE_IMAGES_CLONER
   http_connection_timeout: 30000
+  clonezilla:
+    root: /opt/clonezilla-http
+    images-dir: images

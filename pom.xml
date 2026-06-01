@@ -90,7 +90,7 @@
                         <configuration>
                             <classifier>jar-with-dependencies</classifier>
                             <mainClass>
-                                es.iesjandula.reaktor.images_cloner_client.ImagesClonerClientApplication</mainClass>
+                                es.iesjandula.reaktor.images_cloner_client.ReaktorImagesClonerClientApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>

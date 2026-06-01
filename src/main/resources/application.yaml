@@ -26,4 +26,5 @@ reaktor:
   http_connection_timeout: 30000
   clonezilla:
     root: /opt/clonezilla-http
-    images-dir: images
+    images:
+      dir: images

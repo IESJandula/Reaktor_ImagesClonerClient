@@ -206,6 +206,9 @@ public class ConfiguradorImagenesService
 	 */
 	private void recrearContenedorDocker(Path clonezillaRootPath) throws ImagesClonerClientException
 	{
+		// Validamos el path del archivo de docker compose
+		this.validarPathComposeFile(clonezillaRootPath);
+
 		// Logueamos el mensaje
 		log.info("Recreando contenedor ({}...)", Constants.COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE);
 
@@ -245,7 +248,7 @@ public class ConfiguradorImagenesService
 	 * @return Path del archivo de docker compose.
 	 * @throws ImagesClonerClientException - Excepción de cliente de clonador de imágenes.
 	 */
-	private Path obtenerPathComposeFile(Path clonezillaRootPath) throws ImagesClonerClientException
+	private Path validarPathComposeFile(Path clonezillaRootPath) throws ImagesClonerClientException
 	{
 		Path composeFile = clonezillaRootPath.resolve("docker-compose.yml");
 		if (!Files.isRegularFile(composeFile))

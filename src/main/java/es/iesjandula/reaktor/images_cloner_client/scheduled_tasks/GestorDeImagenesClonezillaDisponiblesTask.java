@@ -317,10 +317,13 @@ public class GestorDeImagenesClonezillaDisponiblesTask
 		try
 		{
 			// Creamos la petición HTTP
-			HttpPut httpPut = new HttpPut(this.imagesClonerServerUrl + "/images_cloner/client/" + nombreImagen);
+			HttpPut httpPut = new HttpPut(this.imagesClonerServerUrl + "/images_cloner/client/");
 
 			// Añadimos el token a la petición
 			httpPut.addHeader("Authorization", "Bearer " + this.authorizationService.obtenerTokenPersonalizado(this.httpConnectionTimeout)) ;
+
+			// Añadimos el nombre de la imagen a la petición
+			httpPut.addHeader("nombreImagen", nombreImagen);
 
 			// Enviamos la petición
 			closeableHttpResponse = closeableHttpClient.execute(httpPut);

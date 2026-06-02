@@ -143,7 +143,6 @@ public class ConfiguradorImagenesService
 	{
 		try
 		{
-
 			// Creamos el patrón de la clave
 			Pattern expresionRegular = Pattern.compile("^[\\s]*#?[\\s]*" + Pattern.quote(key) + "=");
 	

@@ -26,10 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ConfiguradorImagenesService
 {
 	@Value("${reaktor.clonezilla.root}")
-	private String clonezillaRoot ;
+	private String clonezillaCarpetaRaiz ;
 
-	@Value("${reaktor.clonezilla.images.dir}")
-	private String imagesDir ;
+	@Value("${reaktor.clonezilla.images}")
+	private String clonezillaSubcarpetaImagenes ;
 
 	/**
 	 * Activa el modo menú.
@@ -53,7 +53,10 @@ public class ConfiguradorImagenesService
 	public void activarImagen(String nombreImagen, String accion) throws ImagesClonerClientException
 	{
 		// Creamos el path del clonezilla root
-		Path clonezillaRootPath = Path.of(this.clonezillaRoot).normalize();
+		Path clonezillaRootPath = Path.of(this.clonezillaCarpetaRaiz).normalize();
+
+		// Logueamos el mensaje
+		log.info("clonezillaRootPath: {}", clonezillaRootPath);
 
 		// Validamos el path de la imagen
 		this.validarPathImagen(nombreImagen, clonezillaRootPath);
@@ -79,13 +82,16 @@ public class ConfiguradorImagenesService
 	private void validarPathImagen(String nombreImagen, Path clonezillaRootPath) throws ImagesClonerClientException
 	{
 		// Creamos el path de la imagen
-		Path imagenPath = clonezillaRootPath.resolve(this.imagesDir).resolve(nombreImagen).normalize();
+		Path imagenPath = clonezillaRootPath.resolve(this.clonezillaSubcarpetaImagenes).resolve(nombreImagen).normalize();
+
+		// Logueamos el mensaje
+		log.info("imagenPath: {}", imagenPath);
 
 		// Validamos si la imagen existe
 		if (!Files.isDirectory(imagenPath))
 		{
 			// Creamos un mensaje de error
-			String mensajeError = "No existe la carpeta " + this.imagesDir + "/" + nombreImagen + "/ (esperada en " + imagenPath + ")";
+			String mensajeError = "No existe la carpeta " + this.clonezillaSubcarpetaImagenes + "/" + nombreImagen + "/ (esperada en " + imagenPath + ")";
 
 			// Logueamos el mensaje de error
 			log.error(mensajeError);

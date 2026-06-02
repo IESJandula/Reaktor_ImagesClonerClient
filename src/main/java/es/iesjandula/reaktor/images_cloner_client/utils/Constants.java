@@ -40,7 +40,7 @@ public final class Constants
 	/************************************************/
 
 	/** Constante - Comando - docker compose up -d --force-recreate */
-	public static final String COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE = "docker compose up -d --force-recreate" ;
+	public static final String COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE = "/usr/bin/docker compose up -d --force-recreate" ;
 
 	/** Constante - Timeout - Timeout de la ejecución de docker compose */
 	public static final int COMPOSE_TIMEOUT_MINUTES = 10 ;

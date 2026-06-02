@@ -210,7 +210,7 @@ public class ConfiguradorImagenesService
 		log.info("Recreando contenedor ({}...)", Constants.COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE);
 
 		// Creamos el proceso
-		ProcessBuilder processBuilder = new ProcessBuilder(Constants.COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE);
+		ProcessBuilder processBuilder = new ProcessBuilder(Constants.COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE.split(" "));
 
 		// Establecemos el directorio de trabajo
 		processBuilder.directory(clonezillaRootPath.toFile());

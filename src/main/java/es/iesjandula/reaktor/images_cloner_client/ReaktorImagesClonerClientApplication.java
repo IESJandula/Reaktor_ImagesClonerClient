@@ -14,7 +14,6 @@ public class ReaktorImagesClonerClientApplication
 {
 	public static void main(String[] args)
 	{
-		System.exit(SpringApplication.exit(
-				SpringApplication.run(ReaktorImagesClonerClientApplication.class, args)));
+		SpringApplication.run(ReaktorImagesClonerClientApplication.class, args);
 	}
 }

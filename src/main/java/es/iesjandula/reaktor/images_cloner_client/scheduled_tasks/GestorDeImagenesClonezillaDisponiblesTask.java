@@ -60,9 +60,7 @@ public class GestorDeImagenesClonezillaDisponiblesTask
 	 * Metodo encargado de ejecutar el cada X tiempo una petición al servidor 
 	 * para avisar de las imágenes que hay disponibles en Clonezilla
 	 */
-	@Scheduled(cron = "0 45-59/5 7 * * MON-FRI")
-	@Scheduled(cron = "0 */5 8-19 * * MON-FRI")
-	@Scheduled(cron = "0 0-30/5 20 * * MON-FRI")
+	@Scheduled(fixedRate = 15000)
 	public void enviarImagenesClonezillaDisponibles()
 	{
 		// Mostramos un mensaje de información

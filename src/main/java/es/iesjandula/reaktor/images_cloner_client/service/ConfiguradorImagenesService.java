@@ -1,5 +1,6 @@
 package es.iesjandula.reaktor.images_cloner_client.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -81,17 +82,18 @@ public class ConfiguradorImagenesService
 	 */
 	private void validarPathImagen(String nombreImagen, Path clonezillaRootPath) throws ImagesClonerClientException
 	{
-		// Creamos el path de la imagen
-		Path imagenPath = clonezillaRootPath.resolve(this.clonezillaSubcarpetaImagenes).resolve(nombreImagen).normalize();
+
+		// Creamos el path string de la carpeta de imágenes
+		String clonezillaSubcarpetaImagenesPathString = this.clonezillaCarpetaRaiz + File.separator + this.clonezillaSubcarpetaImagenes + File.separator + nombreImagen;
 
 		// Logueamos el mensaje
-		log.info("imagenPath: {}", imagenPath);
+		log.info("Validando path de la imagen: {}", clonezillaSubcarpetaImagenesPathString);
 
 		// Validamos si la imagen existe
-		if (!Files.isDirectory(imagenPath))
+		if (!Files.isDirectory(Path.of(clonezillaSubcarpetaImagenesPathString).normalize()))
 		{
 			// Creamos un mensaje de error
-			String mensajeError = "No existe la carpeta " + this.clonezillaSubcarpetaImagenes + "/" + nombreImagen + "/ (esperada en " + imagenPath + ")";
+			String mensajeError = "No existe la carpeta " + clonezillaSubcarpetaImagenesPathString;
 
 			// Logueamos el mensaje de error
 			log.error(mensajeError);

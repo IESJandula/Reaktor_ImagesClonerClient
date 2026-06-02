@@ -206,9 +206,6 @@ public class ConfiguradorImagenesService
 	 */
 	private void recrearContenedorDocker(Path clonezillaRootPath) throws ImagesClonerClientException
 	{
-		// Obtemos el path del archivo de docker compose
-		Path composeFilePath = this.obtenerPathComposeFile(clonezillaRootPath);
-
 		// Logueamos el mensaje
 		log.info("Recreando contenedor ({}...)", Constants.COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE);
 
@@ -216,7 +213,7 @@ public class ConfiguradorImagenesService
 		ProcessBuilder processBuilder = new ProcessBuilder(Constants.COMANDO_DOCKER_COMPOSE_UP_D_FORCE_RECREATE);
 
 		// Establecemos el directorio de trabajo
-		processBuilder.directory(composeFilePath.toFile());
+		processBuilder.directory(clonezillaRootPath.toFile());
 
 		try
 		{

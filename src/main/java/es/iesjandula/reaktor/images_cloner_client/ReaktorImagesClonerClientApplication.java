@@ -2,17 +2,14 @@ package es.iesjandula.reaktor.images_cloner_client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
-
-import es.iesjandula.reaktor.images_cloner_client.config.ImagesClonerProperties;
-
+import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * @author Francisco Manuel Benítez Chico
  */
 @SpringBootApplication
 @ComponentScan(basePackages = { "es.iesjandula" })
-@EnableConfigurationProperties(ImagesClonerProperties.class)
+@EnableScheduling
 public class ReaktorImagesClonerClientApplication
 {
 	public static void main(String[] args)

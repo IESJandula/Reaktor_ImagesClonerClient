@@ -42,7 +42,7 @@ public class ConfiguradorImagenesService
 		log.info("Activando el modo menú");
 
 		// Activamos la imagen
-		this.activarImagen(null, null);
+		this.activarImagen("", "");
 	}
 
 	/**
@@ -59,8 +59,11 @@ public class ConfiguradorImagenesService
 		// Logueamos el mensaje
 		log.info("clonezillaRootPath: {}", clonezillaRootPath);
 
-		// Validamos el path de la imagen
-		this.validarPathImagen(nombreImagen, clonezillaRootPath);
+		if (nombreImagen != null && !nombreImagen.isEmpty())
+		{
+			// Validamos el path de la imagen
+			this.validarPathImagen(nombreImagen, clonezillaRootPath);
+		}
 
         // Obtenemos el path del archivo de variable de entorno
 		Path variableEntornoFilePath = this.obtenerPathVariableEntorno(clonezillaRootPath);
